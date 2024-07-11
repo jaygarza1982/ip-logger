@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+    ipv4logger:
+        container_name: 'ipv4logger'
+        build:
+          context: .
+        volumes: 
+            - ./:/app
+        ports:
+            - 4321:4321
+        command: ipv4logger
+        restart: unless-stopped
+        env_file: .env
+        logging:
+          driver: "json-file"
+          options:
+            max-size: "10m"
