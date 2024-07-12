@@ -32,8 +32,17 @@ func logIPHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Extract the client IP address from the headers
+	ip := ""
+	ip = r.Header.Get("X-Forwarded-For")
+	if ip == "" {
+		ip = r.Header.Get("X-Real-IP")
+	}
+	if ip == "" {
+		// Fall back to r.RemoteAddr if headers are not set
+		ip = r.RemoteAddr
+	}
 	// Get client IP address without port
-	ip := r.RemoteAddr
 	if colonPos := strings.LastIndex(ip, ":"); colonPos != -1 {
 		ip = ip[:colonPos]
 	}
