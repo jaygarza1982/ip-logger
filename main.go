@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 var expectedAPIKey = os.Getenv("API_KEY")
@@ -38,7 +39,7 @@ func logIPHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Log IP address
-	fmt.Printf("Received request from IP: %s\n", ip)
+	fmt.Printf("Request received at %s from %s\n", time.Now().String(), ip)
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "%s\n", ip)
 }
